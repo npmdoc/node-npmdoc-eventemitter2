@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/hij1nx/EventEmitter2#readme"
-
-    >eventemitter2 (v4.1.0)</a>
+    <a href="https://github.com/hij1nx/EventEmitter2#readme">eventemitter2 (v4.1.0)</a>
 </h1>
 <h4>A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.eventemitter2">module eventemitter2</a><ol>
 
@@ -414,8 +407,8 @@
     <li>description and source-code<pre class="apidocCodePre">_many = function (event, ttl, fn, prepend) {
   var self = this;
 
-  if (typeof fn !== &#x27;function&#x27;) {
-    throw new Error(&#x27;many only accepts instances of Function&#x27;);
+  if (typeof fn !== 'function') {
+    throw new Error('many only accepts instances of Function');
   }
 
   function listener() {
@@ -444,19 +437,19 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_on = function (type, listener, prepend) {
-  if (typeof type === &#x27;function&#x27;) {
+  if (typeof type === 'function') {
     this._onAny(type, listener);
     return this;
   }
 
-  if (typeof listener !== &#x27;function&#x27;) {
-    throw new Error(&#x27;on only accepts instances of Function&#x27;);
+  if (typeof listener !== 'function') {
+    throw new Error('on only accepts instances of Function');
   }
   this._events || init.call(this);
 
-  // To avoid recursion in the case that type == &#x22;newListeners&#x22;! Before
-  // adding it to the listeners, first emit &#x22;newListeners&#x22;.
-  this.emit(&#x27;newListener&#x27;, type, listener);
+  // To avoid recursion in the case that type == "newListeners"! Before
+  // adding it to the listeners, first emit "newListeners".
+  this.emit('newListener', type, listener);
 
   if (this.wildcard) {
     growListenerTree.call(this, type, listener);
@@ -464,16 +457,16 @@
   }
 
   if (!this._events[type]) {
-    // Optimize the case of one listener. Don&#x27;t need the extra array object.
+    // Optimize the case of one listener. Don't need the extra array object.
     this._events[type] = listener;
   }
   else {
-    if (typeof this._events[type] === &#x27;function&#x27;) {
+    if (typeof this._events[type] === 'function') {
       // Change to array.
       this._events[type] = [this._events[type]];
     }
 
-    // If we&#x27;ve already got an array, just add
+    // If we've already got an array, just add
     if(prepend){
       this._events[type].unshift(listener);
     }else{
@@ -482,9 +475,9 @@
 
     // Check for listener leak
     if (
-      !this._events[type].warned &#x26;&#x26;
-      this._maxListeners &#x3e; 0 &#x26;&#x26;
-      this._events[type].length &#x3e; this._maxListeners
+      !this._events[type].warned &amp;&amp;
+      this._maxListeners &gt; 0 &amp;&amp;
+      this._events[type].length &gt; this._maxListeners
     ) {
       this._events[type].warned = true;
       logPossibleMemoryLeak.call(this, this._events[type].length, type);
@@ -506,8 +499,8 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_onAny = function (fn, prepend){
-  if (typeof fn !== &#x27;function&#x27;) {
-    throw new Error(&#x27;onAny only accepts instances of Function&#x27;);
+  if (typeof fn !== 'function') {
+    throw new Error('onAny only accepts instances of Function');
   }
 
   if (!this._all) {
@@ -555,8 +548,8 @@
   return this._on(type, listener, false);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-emitter.emit(&#x27;foo.bar&#x27;);
-emitter.emit(&#x27;foo.bar.baz&#x27;);
+emitter.emit('foo.bar');
+emitter.emit('foo.bar.baz');
 ````
 
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of
@@ -569,8 +562,8 @@ these events.
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
-  console.log(&#x27;The event was raised!&#x27;);
+server.on('data', function(value1, value2, value3, ...) {
+  console.log('The event was raised!');
 ...</pre></li>
     </ul>
 
@@ -589,7 +582,7 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
 
   var type = arguments[0];
 
-  if (type === &#x27;newListener&#x27; &#x26;&#x26; !this.newListener) {
+  if (type === 'newListener' &amp;&amp; !this.newListener) {
     if (!this._events.newListener) {
       return false;
     }
@@ -599,14 +592,14 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
   var args,l,i,j;
   var handler;
 
-  if (this._all &#x26;&#x26; this._all.length) {
+  if (this._all &amp;&amp; this._all.length) {
     handler = this._all.slice();
-    if (al &#x3e; 3) {
+    if (al &gt; 3) {
       args = new Array(al);
-      for (j = 0; j &#x3c; al; j++) args[j] = arguments[j];
+      for (j = 0; j &lt; al; j++) args[j] = arguments[j];
     }
 
-    for (i = 0, l = handler.length; i &#x3c; l; i++) {
+    for (i = 0, l = handler.length; i &lt; l; i++) {
       this.event = type;
       switch (al) {
       case 1:
@@ -626,11 +619,11 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
 
   if (this.wildcard) {
     handler = [];
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     searchListenerTree.call(this, handler, ns, this.listenerTree, 0);
   } else {
     handler = this._events[type];
-    if (typeof handler === &#x27;function&#x27;) {
+    if (typeof handler === 'function') {
       this.event = type;
       switch (al) {
       case 1:
@@ -644,7 +637,7 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
         break;
       default:
         args = new Array(al - 1);
-        for (j = 1; j &#x3c; al; j++) args[j - 1] = arguments[j];
+        for (j = 1; j &lt; al; j++) args[j - 1] = arguments[j];
         handler.apply(this, args);
       }
       return true;
@@ -655,12 +648,12 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
     }
   }
 
-  if (handler &#x26;&#x26; handler.length) {
-    if (al &#x3e; 3) {
+  if (handler &amp;&amp; handler.length) {
+    if (al &gt; 3) {
       args = new Array(al - 1);
-      for (j = 1; j &#x3c; al; j++) args[j - 1] = arguments[j];
+      for (j = 1; j &lt; al; j++) args[j - 1] = arguments[j];
     }
-    for (i = 0, l = handler.length; i &#x3c; l; i++) {
+    for (i = 0, l = handler.length; i &lt; l; i++) {
       this.event = type;
       switch (al) {
       case 1:
@@ -677,11 +670,11 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
       }
     }
     return true;
-  } else if (!this._all &#x26;&#x26; type === &#x27;error&#x27;) {
+  } else if (!this._all &amp;&amp; type === 'error') {
     if (arguments[1] instanceof Error) {
-      throw arguments[1]; // Unhandled &#x27;error&#x27; event
+      throw arguments[1]; // Unhandled 'error' event
     } else {
-      throw new Error(&#x22;Uncaught, unspecified &#x27;error&#x27; event.&#x22;);
+      throw new Error("Uncaught, unspecified 'error' event.");
     }
     return false;
   }
@@ -690,18 +683,18 @@ server.on(&#x27;data&#x27;, function(value1, value2, value3, ...) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 `*` character). If the event name is a string, a wildcard may appear as `foo.*`.
-If the event name is an array, the wildcard may appear as `[&#x27;foo&#x27;, &#x27;*&#x27;]`.
+If the event name is an array, the wildcard may appear as `['foo', '*']`.
 
 If either of the above described events were passed to the `on` method,
 subsequent emits such as the following would be observed...
 
 ```javascript
-   emitter.<span class="apidocCodeKeywordSpan">emit</span>(&#x27;foo.bazz&#x27;);
-   emitter.emit([&#x27;foo&#x27;, &#x27;bar&#x27;]);
+   emitter.<span class="apidocCodeKeywordSpan">emit</span>('foo.bazz');
+   emitter.emit(['foo', 'bar']);
 ```
 
 # Multi-level Wildcards
-A double wildcard (the string `**`) matches any number of levels (zero or more) of events. So if for example `&#x27;foo.**&#x27;`
+A double wildcard (the string `**`) matches any number of levels (zero or more) of events. So if for example `'foo.**'`
 is passed to the `on` method, the following events would be observed:
 
 ````javascript
@@ -723,7 +716,7 @@ is passed to the `on` method, the following events would be observed:
 
   var type = arguments[0];
 
-  if (type === &#x27;newListener&#x27; &#x26;&#x26; !this.newListener) {
+  if (type === 'newListener' &amp;&amp; !this.newListener) {
       if (!this._events.newListener) { return Promise.resolve([false]); }
   }
 
@@ -734,11 +727,11 @@ is passed to the `on` method, the following events would be observed:
   var handler;
 
   if (this._all) {
-    if (al &#x3e; 3) {
+    if (al &gt; 3) {
       args = new Array(al);
-      for (j = 1; j &#x3c; al; j++) args[j] = arguments[j];
+      for (j = 1; j &lt; al; j++) args[j] = arguments[j];
     }
-    for (i = 0, l = this._all.length; i &#x3c; l; i++) {
+    for (i = 0, l = this._all.length; i &lt; l; i++) {
       this.event = type;
       switch (al) {
       case 1:
@@ -758,13 +751,13 @@ is passed to the `on` method, the following events would be observed:
 
   if (this.wildcard) {
     handler = [];
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     searchListenerTree.call(this, handler, ns, this.listenerTree, 0);
   } else {
     handler = this._events[type];
   }
 
-  if (typeof handler === &#x27;function&#x27;) {
+  if (typeof handler === 'function') {
     this.event = type;
     switch (al) {
     case 1:
@@ -778,16 +771,16 @@ is passed to the `on` method, the following events would be observed:
       break;
     default:
       args = new Array(al - 1);
-      for (j = 1; j &#x3c; al; j++) args[j - 1] = arguments[j];
+      for (j = 1; j &lt; al; j++) args[j - 1] = arguments[j];
       promises.push(handler.apply(this, args));
     }
-  } else if (handler &#x26;&#x26; handler.length) {
+  } else if (handler &amp;&amp; handler.length) {
     handler = handler.slice();
-    if (al &#x3e; 3) {
+    if (al &gt; 3) {
       args = new Array(al - 1);
-      for (j = 1; j &#x3c; al; j++) args[j - 1] = arguments[j];
+      for (j = 1; j &lt; al; j++) args[j - 1] = arguments[j];
     }
-    for (i = 0, l = handler.length; i &#x3c; l; i++) {
+    for (i = 0, l = handler.length; i &lt; l; i++) {
       this.event = type;
       switch (al) {
       case 1:
@@ -803,11 +796,11 @@ is passed to the `on` method, the following events would be observed:
         promises.push(handler[i].apply(this, args));
       }
     }
-  } else if (!this._all &#x26;&#x26; type === &#x27;error&#x27;) {
+  } else if (!this._all &amp;&amp; type === 'error') {
     if (arguments[1] instanceof Error) {
-      return Promise.reject(arguments[1]); // Unhandled &#x27;error&#x27; event
+      return Promise.reject(arguments[1]); // Unhandled 'error' event
     } else {
-      return Promise.reject(&#x22;Uncaught, unspecified &#x27;error&#x27; event.&#x22;);
+      return Promise.reject("Uncaught, unspecified 'error' event.");
     }
   }
 
@@ -825,10 +818,10 @@ name in order with the list of arguments.
 
 Return the results of the listeners via [Promise.all](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects
 /Promise/all).
-Only this method doesn&#x27;t work [IE](http://caniuse.com/#search=promise).
+Only this method doesn't work [IE](http://caniuse.com/#search=promise).
 
 ```javascript
-emitter.on(&#x27;get&#x27;,function(i) {
+emitter.on('get',function(i) {
   return new Promise(function(resolve){
 ...</pre></li>
     </ul>
@@ -847,7 +840,7 @@ emitter.on(&#x27;get&#x27;,function(i) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-emitter.emitAsync(&#x27;get&#x27;,0)
+emitter.emitAsync('get',0)
 .then(function(results){
   console.log(results); // [3,2,1,0,undefined]
 });
@@ -858,8 +851,8 @@ emitter.emitAsync(&#x27;get&#x27;,0)
 Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
 
 ```javascript
-emitter.on(&#x27;foo&#x27;, () =&#x3e; {});
-emitter.on(&#x27;bar&#x27;, () =&#x3e; {});
+emitter.on('foo', () =&gt; {});
+emitter.on('bar', () =&gt; {});
 ...</pre></li>
     </ul>
 
@@ -890,7 +883,7 @@ emitter.on(&#x27;bar&#x27;, () =&#x3e; {});
     <li>description and source-code<pre class="apidocCodePre">listeners = function (type) {
   if (this.wildcard) {
     var handlers = [];
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     searchListenerTree.call(this, handlers, ns, this.listenerTree, 0);
     return handlers;
   }
@@ -917,8 +910,8 @@ Returns an array of listeners for the specified event. This array can be
 manipulated, e.g. to remove listeners.
 
 ```javascript
-server.on(&#x27;get&#x27;, function(value) {
-  console.log(&#x27;someone connected!&#x27;);
+server.on('get', function(value) {
+  console.log('someone connected!');
 ...</pre></li>
     </ul>
 
@@ -943,10 +936,10 @@ server.on(&#x27;get&#x27;, function(value) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```javascript
-server.on(&#x27;get&#x27;, function(value) {
-  console.log(&#x27;someone connected!&#x27;);
+server.on('get', function(value) {
+  console.log('someone connected!');
 });
-console.log(server.listeners(&#x27;get&#x27;)); // [ [Function] ]
+console.log(server.listeners('get')); // [ [Function] ]
 ```
 
 ### emitter.<span class="apidocCodeKeywordSpan">listenersAny</span>()
@@ -956,7 +949,7 @@ specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
 server.onAny(function(value) {
-  console.log(&#x27;someone connected!&#x27;);
+  console.log('someone connected!');
 ...</pre></li>
     </ul>
 
@@ -980,8 +973,8 @@ server.onAny(function(value) {
  - Fire an event N times and then remove it, an extension of the `once` concept.
 
 ```javascript
-    server.<span class="apidocCodeKeywordSpan">many</span>(&#x27;foo&#x27;, 4, function() {
-      console.log(&#x27;hello&#x27;);
+    server.<span class="apidocCodeKeywordSpan">many</span>('foo', 4, function() {
+      console.log('hello');
     });
 ```
 
@@ -1001,14 +994,14 @@ server.onAny(function(value) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">off = function (type, listener) {
-  if (typeof listener !== &#x27;function&#x27;) {
-    throw new Error(&#x27;removeListener only takes instances of Function&#x27;);
+  if (typeof listener !== 'function') {
+    throw new Error('removeListener only takes instances of Function');
   }
 
   var handlers,leafs=[];
 
   if(this.wildcard) {
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     leafs = searchListenerTree.call(this, null, ns, this.listenerTree, 0);
   }
   else {
@@ -1018,23 +1011,23 @@ server.onAny(function(value) {
     leafs.push({_listeners:handlers});
   }
 
-  for (var iLeaf=0; iLeaf&#x3c;leafs.length; iLeaf++) {
+  for (var iLeaf=0; iLeaf&lt;leafs.length; iLeaf++) {
     var leaf = leafs[iLeaf];
     handlers = leaf._listeners;
     if (isArray(handlers)) {
 
       var position = -1;
 
-      for (var i = 0, length = handlers.length; i &#x3c; length; i++) {
+      for (var i = 0, length = handlers.length; i &lt; length; i++) {
         if (handlers[i] === listener ||
-          (handlers[i].listener &#x26;&#x26; handlers[i].listener === listener) ||
-          (handlers[i]._origin &#x26;&#x26; handlers[i]._origin === listener)) {
+          (handlers[i].listener &amp;&amp; handlers[i].listener === listener) ||
+          (handlers[i]._origin &amp;&amp; handlers[i]._origin === listener)) {
           position = i;
           break;
         }
       }
 
-      if (position &#x3c; 0) {
+      if (position &lt; 0) {
         continue;
       }
 
@@ -1054,13 +1047,13 @@ server.onAny(function(value) {
         }
       }
 
-      this.emit(&#x22;removeListener&#x22;, type, listener);
+      this.emit("removeListener", type, listener);
 
       return this;
     }
     else if (handlers === listener ||
-      (handlers.listener &#x26;&#x26; handlers.listener === listener) ||
-      (handlers._origin &#x26;&#x26; handlers._origin === listener)) {
+      (handlers.listener &amp;&amp; handlers.listener === listener) ||
+      (handlers._origin &amp;&amp; handlers._origin === listener)) {
       if(this.wildcard) {
         delete leaf._listeners;
       }
@@ -1068,7 +1061,7 @@ server.onAny(function(value) {
         delete this._events[type];
       }
 
-      this.emit(&#x22;removeListener&#x22;, type, listener);
+      this.emit("removeListener", type, listener);
     }
   }
 
@@ -1080,9 +1073,9 @@ server.onAny(function(value) {
     for (var i in keys) {
       var key = keys[i];
       var obj = root[key];
-      if ((obj instanceof Function) || (typeof obj !== &#x22;object&#x22;) || (obj === null))
+      if ((obj instanceof Function) || (typeof obj !== "object") || (obj === null))
         continue;
-      if (Object.keys(obj).length &#x3e; 0) {
+      if (Object.keys(obj).length &gt; 0) {
         recursivelyGarbageCollect(root[key]);
       }
       if (Object.keys(obj).length === 0) {
@@ -1095,7 +1088,7 @@ server.onAny(function(value) {
   return this;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;This event will be listened to exactly four times.&#x27;);
+  console.log('This event will be listened to exactly four times.');
 });
 ```
 
@@ -1109,7 +1102,7 @@ Remove a listener from the listener array for the specified event.
 
 ```javascript
 var callback = function(value) {
-  console.log(&#x27;someone connected!&#x27;);
+  console.log('someone connected!');
 ...</pre></li>
     </ul>
 
@@ -1124,19 +1117,19 @@ var callback = function(value) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">offAny = function (fn) {
   var i = 0, l = 0, fns;
-  if (fn &#x26;&#x26; this._all &#x26;&#x26; this._all.length &#x3e; 0) {
+  if (fn &amp;&amp; this._all &amp;&amp; this._all.length &gt; 0) {
     fns = this._all;
-    for(i = 0, l = fns.length; i &#x3c; l; i++) {
+    for(i = 0, l = fns.length; i &lt; l; i++) {
       if(fn === fns[i]) {
         fns.splice(i, 1);
-        this.emit(&#x22;removeListenerAny&#x22;, fn);
+        this.emit("removeListenerAny", fn);
         return this;
       }
     }
   } else {
     fns = this._all;
-    for(i = 0, l = fns.length; i &#x3c; l; i++)
-      this.emit(&#x22;removeListenerAny&#x22;, fns[i]);
+    for(i = 0, l = fns.length; i &lt; l; i++)
+      this.emit("removeListenerAny", fns[i]);
     this._all = [];
   }
   return this;
@@ -1145,7 +1138,7 @@ var callback = function(value) {
 
 ```javascript
 server.prependAny(function(event, value) {
-  console.log(&#x27;All events trigger this.&#x27;);
+  console.log('All events trigger this.');
 });
 ```
 
@@ -1155,7 +1148,7 @@ Removes the listener that will be fired when any event is emitted.
 
 ```javascript
 server.offAny(function(value) {
-  console.log(&#x27;The event was raised!&#x27;);
+  console.log('The event was raised!');
 });
 ...</pre></li>
     </ul>
@@ -1180,7 +1173,7 @@ server.offAny(function(value) {
  - Getting the actual event that fired.
 
 ```javascript
-    server.<span class="apidocCodeKeywordSpan">on</span>(&#x27;foo.*&#x27;, function(value1, value2) {
+    server.<span class="apidocCodeKeywordSpan">on</span>('foo.*', function(value1, value2) {
       console.log(this.event, value1, value2);
     });
 ```
@@ -1205,8 +1198,8 @@ server.offAny(function(value) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```javascript
-server.prependListener(&#x27;data&#x27;, function(value1, value2, value3, ...) {
-  console.log(&#x27;The event was raised!&#x27;);
+server.prependListener('data', function(value1, value2, value3, ...) {
+  console.log('The event was raised!');
 });
 ```
 
@@ -1217,7 +1210,7 @@ Adds a listener that will be fired when any event is emitted. The event name is 
 
 ```javascript
 server.onAny(function(event, value) {
-  console.log(&#x27;All events trigger this.&#x27;);
+  console.log('All events trigger this.');
 });
 ...</pre></li>
     </ul>
@@ -1238,7 +1231,7 @@ server.onAny(function(event, value) {
 
 ```javascript
 server.offAny(function(value) {
-  console.log(&#x27;The event was raised!&#x27;);
+  console.log('The event was raised!');
 });
 ```
 
@@ -1248,8 +1241,8 @@ Adds a **one time** listener for the event. The listener is invoked
 only the first time the event is fired, after which it is removed.
 
 ```javascript
-server.once(&#x27;get&#x27;, function (value) {
-  console.log(&#x27;Ah, we have our first value!&#x27;);
+server.once('get', function (value) {
+  console.log('Ah, we have our first value!');
 ...</pre></li>
     </ul>
 
@@ -1269,7 +1262,7 @@ server.once(&#x27;get&#x27;, function (value) {
 
 ```javascript
 server.onAny(function(event, value) {
-  console.log(&#x27;All events trigger this.&#x27;);
+  console.log('All events trigger this.');
 });
 ```
 
@@ -1280,7 +1273,7 @@ Adds a listener that will be fired when any event is emitted. The event name is 
 
 ```javascript
 server.prependAny(function(event, value) {
-  console.log(&#x27;All events trigger this.&#x27;);
+  console.log('All events trigger this.');
 });
 ...</pre></li>
     </ul>
@@ -1300,8 +1293,8 @@ server.prependAny(function(event, value) {
     <li>example usage<pre class="apidocCodePre">...
 
 ```javascript
-server.on(&#x27;data&#x27;, function(value) {
-  console.log(&#x27;The event was raised!&#x27;);
+server.on('data', function(value) {
+  console.log('The event was raised!');
 });
 ```
 
@@ -1310,8 +1303,8 @@ server.on(&#x27;data&#x27;, function(value) {
 Adds a listener to the beginning of the listeners array for the specified event.
 
 ```javascript
-server.prependListener(&#x27;data&#x27;, function(value1, value2, value3, ...) {
-  console.log(&#x27;The event was raised!&#x27;);
+server.prependListener('data', function(value1, value2, value3, ...) {
+  console.log('The event was raised!');
 });
 ...</pre></li>
     </ul>
@@ -1331,8 +1324,8 @@ server.prependListener(&#x27;data&#x27;, function(value1, value2, value3, ...) {
     <li>example usage<pre class="apidocCodePre">...
 
 ```javascript
-    server.many(&#x27;get&#x27;, 4, function (value) {
-      console.log(&#x27;This event will be listened to exactly four times.&#x27;);
+    server.many('get', 4, function (value) {
+      console.log('This event will be listened to exactly four times.');
     });
 ```
 
@@ -1362,8 +1355,8 @@ The listener is added to the beginning of the listeners array.
     <li>example usage<pre class="apidocCodePre">...
 
 ```javascript
-server.once(&#x27;get&#x27;, function (value) {
-  console.log(&#x27;Ah, we have our first value!&#x27;);
+server.once('get', function (value) {
+  console.log('Ah, we have our first value!');
 });
 ```
 
@@ -1374,7 +1367,7 @@ only the first time the event is fired, after which it is removed.
 The listener is added to the beginning of the listeners array
 
 ```javascript
-server.prependOnceListener(&#x27;get&#x27;, function (value) {
+server.prependOnceListener('get', function (value) {
 ...</pre></li>
     </ul>
 
@@ -1394,10 +1387,10 @@ server.prependOnceListener(&#x27;get&#x27;, function (value) {
   }
 
   if (this.wildcard) {
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     var leafs = searchListenerTree.call(this, null, ns, this.listenerTree, 0);
 
-    for (var iLeaf=0; iLeaf&#x3c;leafs.length; iLeaf++) {
+    for (var iLeaf=0; iLeaf&lt;leafs.length; iLeaf++) {
       var leaf = leafs[iLeaf];
       leaf._listeners = null;
     }
@@ -1409,9 +1402,9 @@ server.prependOnceListener(&#x27;get&#x27;, function (value) {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     };
-    server.on(&#x27;get&#x27;, callback);
+    server.on('get', callback);
     // ...
-    server.removeListener(&#x27;get&#x27;, callback);
+    server.removeListener('get', callback);
 ```
 
 
@@ -1436,14 +1429,14 @@ By default EventEmitters will print a warning if more than 10 listeners
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">removeListener = function (type, listener) {
-  if (typeof listener !== &#x27;function&#x27;) {
-    throw new Error(&#x27;removeListener only takes instances of Function&#x27;);
+  if (typeof listener !== 'function') {
+    throw new Error('removeListener only takes instances of Function');
   }
 
   var handlers,leafs=[];
 
   if(this.wildcard) {
-    var ns = typeof type === &#x27;string&#x27; ? type.split(this.delimiter) : type.slice();
+    var ns = typeof type === 'string' ? type.split(this.delimiter) : type.slice();
     leafs = searchListenerTree.call(this, null, ns, this.listenerTree, 0);
   }
   else {
@@ -1453,23 +1446,23 @@ By default EventEmitters will print a warning if more than 10 listeners
     leafs.push({_listeners:handlers});
   }
 
-  for (var iLeaf=0; iLeaf&#x3c;leafs.length; iLeaf++) {
+  for (var iLeaf=0; iLeaf&lt;leafs.length; iLeaf++) {
     var leaf = leafs[iLeaf];
     handlers = leaf._listeners;
     if (isArray(handlers)) {
 
       var position = -1;
 
-      for (var i = 0, length = handlers.length; i &#x3c; length; i++) {
+      for (var i = 0, length = handlers.length; i &lt; length; i++) {
         if (handlers[i] === listener ||
-          (handlers[i].listener &#x26;&#x26; handlers[i].listener === listener) ||
-          (handlers[i]._origin &#x26;&#x26; handlers[i]._origin === listener)) {
+          (handlers[i].listener &amp;&amp; handlers[i].listener === listener) ||
+          (handlers[i]._origin &amp;&amp; handlers[i]._origin === listener)) {
           position = i;
           break;
         }
       }
 
-      if (position &#x3c; 0) {
+      if (position &lt; 0) {
         continue;
       }
 
@@ -1489,13 +1482,13 @@ By default EventEmitters will print a warning if more than 10 listeners
         }
       }
 
-      this.emit(&#x22;removeListener&#x22;, type, listener);
+      this.emit("removeListener", type, listener);
 
       return this;
     }
     else if (handlers === listener ||
-      (handlers.listener &#x26;&#x26; handlers.listener === listener) ||
-      (handlers._origin &#x26;&#x26; handlers._origin === listener)) {
+      (handlers.listener &amp;&amp; handlers.listener === listener) ||
+      (handlers._origin &amp;&amp; handlers._origin === listener)) {
       if(this.wildcard) {
         delete leaf._listeners;
       }
@@ -1503,7 +1496,7 @@ By default EventEmitters will print a warning if more than 10 listeners
         delete this._events[type];
       }
 
-      this.emit(&#x22;removeListener&#x22;, type, listener);
+      this.emit("removeListener", type, listener);
     }
   }
 
@@ -1515,9 +1508,9 @@ By default EventEmitters will print a warning if more than 10 listeners
     for (var i in keys) {
       var key = keys[i];
       var obj = root[key];
-      if ((obj instanceof Function) || (typeof obj !== &#x22;object&#x22;) || (obj === null))
+      if ((obj instanceof Function) || (typeof obj !== "object") || (obj === null))
         continue;
-      if (Object.keys(obj).length &#x3e; 0) {
+      if (Object.keys(obj).length &gt; 0) {
         recursivelyGarbageCollect(root[key]);
       }
       if (Object.keys(obj).length === 0) {
@@ -1530,8 +1523,8 @@ By default EventEmitters will print a warning if more than 10 listeners
   return this;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-server.many(&#x27;get&#x27;, 4, function (value) {
-  console.log(&#x27;This event will be listened to exactly four times.&#x27;);
+server.many('get', 4, function (value) {
+  console.log('This event will be listened to exactly four times.');
 });
 ```
 
@@ -1594,3 +1587,4 @@ that to be increased. Set to zero for unlimited.
     ]
 </div>
 </div>
+</body></html>
